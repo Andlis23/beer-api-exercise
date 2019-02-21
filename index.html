@@ -1,7 +1,128 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Beers</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Lily+Script+One" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Josefin+Slab" rel="stylesheet"> 
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+        <style>
+            .container{
+                margin: 0px auto;
+                align-content: center;
+            }
+
+            .banner {
+                background-image: url('IMG1.jpg');
+                min-height: 100%;
+                background-position: center;
+                background-size: cover;
+                margin: 0px;
+                height: 300px;
+            }
+           
+            h1{
+                text-align: center;
+                font-family: 'Lily Script One', cursive;
+                font-size: 180px;
+                color: #ffffff;
+                line-height: 280px;
+            }
+
+            p{
+                margin: 15px;
+                margin-top: 30px;
+                margin-left: 35px;
+                font-size: 25px;
+                font-family: 'Josefin Slab', serif;
+            }
+
+           .table-responsive{
+                margin: 15px;
+            }
+
+            .table-responsive table{ 
+                border-collapse: collapse;
+                width: 800px; 
+                margin: 15px auto;
+                font-family: 'Josefin Slab', serif;
+                font-size: 18px
+                
+            }
+
+            .table-responsive table th{ 
+                width: 15px  
+            }
+
+            .footer{
+                margin-bottom: 50px;
+            }
+
+            .footer p{
+                margin-left: 180px;
+            }
+        </style>
 </head>
 <body>
+    <div class="container">
+        <div class="banner">
+            <h1>Beers</h1>
+        </div>
+        <p>This is a list of 10 beers with their ibu and ph</p>
+        <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Beer</th>
+                    <th>IBU</th>
+                    <th>PH</th>
+                </tr>
+            </thead>
+            <tbody id="contenido">
+                <tr>
+                    <td class="name"></td>
+                    <td class="ibu"></td>
+                    <td class="ph"></td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+        <div class="footer">
+            <p>If you want more information about this click here  <button type="button" class="btn btn-info" onclick="boton()">More info</button></p>
+        </div>
+    </div>
+
+    <script>
+        fetch("https://api.punkapi.com/v2/beers?per_page=10")
+        .then(response => response.json())
+        .then(data => {
+            tabla(data)
+        })
+        .catch(error => console.error(error))
+
+        function tabla(data){
+            contenido.innerHTML = ''
+            for(let valor of data){
+                contenido.innerHTML += `
+                <tr>
+                <td>${valor.name}</td>
+                <td>${valor.ibu}</td>
+                <td>${valor.ph}</td>
+                </tr> `
+            }
+        }
+
+        function boton(){
+            fetch("https://api.punkapi.cohttps://api.punkapi.com/v2/beers/random&per_page=80")
+            .then(response => response.json())
+            .then(data => {
+                tabla(data)
+            })
+            .catch(error => alert('Sorry, in this moment we cannot give you this information'));
+        }
+    </script>
 </body>
 </html>
